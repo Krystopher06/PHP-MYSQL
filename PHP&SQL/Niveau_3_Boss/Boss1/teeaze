@@ -1,0 +1,55 @@
+<?php
+include 'dbMedoo.php';
+include 'email_scraper.php';
+$url = '';
+
+
+
+
+//$emaildb = implode($emails, '<br>');
+
+if (isset($_POST['submit'])) {
+    $url = htmlspecialchars($_POST['url']);
+    $emails = scrape_email($url);
+    foreach ($emails as $row) {
+        $database->insert('emails', [
+            'email' => $row,
+
+        ]);
+    }
+}
+?>
+
+
+<label for="url">Enter an https:// URL:</label>
+
+<input type="text" name="url" id="url" placeholder="https://example.com" size="30" required>
+<button type="submit" name="submit" value='add'>Envoyer</button><br><br>
+
+
+
+
+
+
+
+
+
+
+
+<?php
+include 'dbMedoo.php';
+include 'email_scraper.php';
+$url = 'https://github.com/nyxgeek/username-lists/blob/master/usernames-top100/usernames_gmail.com.txt';
+$emails = scrape_email($url);
+//$emaildb = implode($emails, '<br>');
+
+if ($emails){
+    foreach($emails as $row){
+        $database->insert('emails', [
+            'email' => $row,
+    
+        ]);
+    }
+}
+?>
+
